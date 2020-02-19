@@ -1,6 +1,5 @@
 # Config backup
 
-
 ## vim
 
 `~/.config/nvim/init.vim`
