@@ -1,0 +1,14 @@
+acpitool
+debtap
+deepin.com.qq.im
+deepin.com.thunderspeed
+google-chrome
+nerd-fonts-hack
+netease-cloud-music
+pacvim-git
+screenkey
+sunloginclient
+teamviewer
+ttf-font-awesome-4
+v2raya
+visual-studio-code-bin
