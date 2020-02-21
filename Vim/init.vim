@@ -1,25 +1,43 @@
-set number
-set relativenumber
 set encoding=utf-8
-set scrolloff=4		"Keep the distance between the up and low
-" set cursorline
+let &t_ut=''		" about theme color
+set list			" show space and tab
+set number			" nu
+set relativenumber	" number N
+set scrolloff=4		" Keep the distance between the up and low
+set cursorline		" line
+set colorcolumn=80	" 右边的竖条
+set ruler
+syntax enable
+colorscheme snazzy
+let g:SnazzyTransparent = 1
 let mapleader = ","
 set softtabstop=4	" inentation
 set tabstop=4
 set shiftwidth=4
-set wrap
-set wildmenu
+" set hlsearch		"高亮搜索
+" set incsearch
+" set ignorecase	"忽略大小写
+" set smartcase		"智能大小写but can't run
+set wrap			" 自动换行
+"set wildmenu		" : 下的补全
+"set nocompatible	"貌似是取消vi兼容
 set autoindent
 let g:python3_host_porg = '/usr/bin/python3'
 let g:python2_host_porg = '/usr/bin/python2.7'
 let g:loaded_python_provider = 0
 let g:lodaed_python3_provider = 0
-"set clipboard=unnamedplus
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif	" Restore last position
+
+"set clipboard=unnamedplus 
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif							"Restore last position
+autocmd BufWritePre *.markdown,*.md,*.text,*.txt,*.wiki,*.cnx call PanGuSpacing()		"PanGu auto typesetting
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/goyo.vim'
+Plug 'yggdroot/indentline'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
 "Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
@@ -29,22 +47,34 @@ Plug 'SirVer/ultisnips'
 "Plug 'junegunn/vim-peekaboo'
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'LukeLike/vim-fcitx-switch'	"For input Chinese
+Plug 'hotoo/pangu.vim'				"『盘古之白』中文排版
+Plug 'connorholyday/vim-snazzy'
 
 call plug#end()
 
 nmap <leader>h <Plug>(easymotion-s2)
+" nnoremap <C-S-U> m1gUiw`1
+" inoremap <C-S-U> <ESC>gUiwgi
 nmap <leader>gy :Goyo<Cr>
 nnoremap <leader>i <Esc>:q<Cr>
 nnoremap <leader>w :w<Cr>
-nnoremap <leader>s :set spell!<Cr>
+nnoremap <leader>s :set spell!<Cr>	" z=　
+inoremap <c-s> <c-x>s
 nnoremap <leader>ve :vsplit $MYVIMRC<Cr>
 nnoremap <leader>vs :source $MYVIMRC<Cr>
 nnoremap ; :
+noremap <Cr>j 5jzz
+noremap <Cr>k 5kzz
+noremap - ;
+noremap _ ,
 
 inoremap <leader>w <Esc>:w<Cr>
 inoremap <c-u> <Esc> viwU
 
-" xclip
+"xclip
 
 function! ClipboardYank()
 	call system('xclip -i -selectinon clipboard', @@)
@@ -58,7 +88,7 @@ noremap <leader>p "+p
 
 inoremap <leader>p <Esc>"+p"
 
-" Complie Mod
+"Complie Mod
 map <leader>r :call Complie()<Cr>
 func! Complie()
 	exec "w"
@@ -81,7 +111,7 @@ elseif &filetype == 'markdown'
 endif
 endfunc
 
-" Test Mod
+"Test Mod
 map <leader>t :call Test()<cr>
 func! Test()
 if &filetype == 'go'
@@ -89,32 +119,205 @@ if &filetype == 'go'
 endif
 endfunc
 
-" Vim-Go
+" Coc
+
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction
+
+    inoremap <silent><expr> <TAB>
+		  \ pumvisible() ? "\<C-n>" :
+		  \ <SID>check_back_space() ? "\<TAB>" :
+		  \ coc#refresh()
+" if hidden is not set, TextEdit might fail.
+set hidden
+
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" Better display for messages
+set cmdheight=2
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Or use `complete_info` if your vim support it, like:
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Create mappings for function text object, requires document symbols feature of languageserver.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+"Vim-Go
 autocmd Filetype go nmap <leader>b <Plug>(go-build)
 
-" MarkDown 
+" ===
+" === NERDTree
+" ===
+nnoremap <leader>e :NERDTreeToggle<CR>
+let NERDTreeMapOpenExpl = ""
+let NERDTreeMapUpdir = ""
+let NERDTreeMapUpdirKeepOpen = "l"
+let NERDTreeMapOpenSplit = ""
+let NERDTreeOpenVSplit = ""
+let NERDTreeMapActivateNode = "i"
+let NERDTreeMapOpenInTab = "o"
+let NERDTreeMapPreview = ""
+let NERDTreeMapCloseDir = "n"
+let NERDTreeMapChangeRoot = "y"
+
+
+" ==
+" == NERDTree-git
+" ==
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+
+
+"MarkDown 
 
 let g:mkdp_browser = 'chromium'
 
 "autocmd Filetype markdown map <leader>w yiWi[<esc>Ea](<esc>pa)
-autocmd Filetype markdown inoremap ,h <Esc>/<(_ _)><Cr>:nohlsearch<Cr>c7l
-autocmd Filetype markdown inoremap ,o <Esc>/ <(_ _)><Cr>:nohlsearch<Cr>c5l<Cr>
+autocmd Filetype markdown inoremap ,h <Esc>/#>#<Cr>:nohlsearch<Cr>c3l
+autocmd Filetype markdown inoremap ,t <Esc>/#>#<Cr>:nohlsearch<Cr>c3l<Cr>
 autocmd Filetype markdown inoremap ,n ---<Enter><Enter>
-autocmd Filetype markdown inoremap ,b **** <(_ _)><Esc>F*hi
-autocmd Filetype markdown inoremap ,m **** <(_ _)><Esc>F*hi
-autocmd Filetype markdown inoremap ,i ** <(_ _)><Esc>F*i
-autocmd Filetype markdown inoremap ,a ** <(_ _)><Esc>F*i
-autocmd Filetype markdown inoremap ,s ~~~~ <(_ _)><Esc>F~hi
-autocmd Filetype markdown inoremap ,z <sup></sup><(_ _)><Esc>F/hi
-autocmd Filetype markdown inoremap ,v <sub></sub><(_ _)><Esc>F/hi
-autocmd Filetype markdown inoremap ,d `` <(_ _)><Esc>F`i
+autocmd Filetype markdown inoremap ,b **** #>#<Esc>F*hi
+autocmd Filetype markdown inoremap ,i ** #>#<Esc>F*i
+autocmd Filetype markdown inoremap ,s ~~~~ #>#<Esc>F~hi
+autocmd Filetype markdown inoremap ,z <sup></sup>#>#<Esc>F/hi
+autocmd Filetype markdown inoremap ,v <sub></sub>#>#<Esc>F/hi
 autocmd Filetype markdown inoremap ,r <Esc>:MarkdownPreview<Cr>
-autocmd Filetype markdown inoremap ,e - [ ] <Enter><(_ _)><ESC>kA
-autocmd Filetype markdown inoremap ,p ![](<(_ _)>) <(_ _)><Esc>F[a
-autocmd Filetype markdown inoremap ,u [](<(_ _)>) <(_ _)><Esc>F[a
+autocmd Filetype markdown inoremap ,e - [ ] <Enter>#>#<ESC>kA
+autocmd Filetype markdown inoremap ,p ![](#>#) #>#<Esc>F[a
+autocmd Filetype markdown inoremap ,u [](#>#) #>#<Esc>F[a
 autocmd Filetype markdown inoremap ,l --------<Enter>
-autocmd Filetype markdown inoremap ,c ```<Enter><(_ _)><Enter>```<Enter><Enter><(_ _)><Esc>5kA
-autocmd Filetype markdown inoremap ,0 #<Space><Enter><(_ _)><Esc>kA
-autocmd Filetype markdown inoremap ,9 ##<Space><Enter><(_ _)><Esc>kA
-autocmd Filetype markdown inoremap ,8 ###<Space><Enter><(_ _)><Esc>kA
-autocmd Filetype markdown inoremap ,7 ####<Space><Enter><(_ _)><Esc>kA
+autocmd Filetype markdown inoremap ,c ```<Enter>#>#<Enter>```<Enter><Enter>#>#<Esc>4kA
+autocmd Filetype markdown inoremap ,d `` #>#<Esc>F`i
+
+autocmd Filetype markdown inoremap ,9 #<Space><Enter>#>#<Esc>kA
+autocmd Filetype markdown inoremap ,8 ##<Space><Enter>#>#<Esc>kA
+autocmd Filetype markdown inoremap ,7 ###<Space><Enter>#>#<Esc>kA
+autocmd Filetype markdown inoremap ,6 ####<Space><Enter>#>#<Esc>kA
+autocmd Filetype markdown inoremap ,5 #####<Space><Enter>#>#<Esc>kA
+autocmd Filetype markdown inoremap ,4 ######<Space><Enter>#>#<Esc>kA
