@@ -1,41 +1,59 @@
+" --------
+" _/_/_/_/_/  _/
+"    _/      _/_/_/      _/_/_/    _/_/      _/_/    _/    _/   
+"   _/      _/    _/  _/    _/  _/    _/  _/_/_/_/  _/    _/    
+"  _/      _/    _/  _/    _/  _/    _/  _/        _/    _/     
+" _/      _/    _/    _/_/_/    _/_/      _/_/_/    _/_/_/      
+" --------
 set encoding=utf-8
+set fileencodings=utf-8
+set fileencodings=utf-8,ucs-bom,gbk,cp936,gb2312,gb18030
 let &t_ut=''		" about theme color
-set list			" show space and tab
 set number			" nu
 set relativenumber	" number N
 set scrolloff=4		" Keep the distance between the up and low
 set cursorline		" line
 set colorcolumn=80	" 右边的竖条
 set ruler
+set confirm			" 在处理未保存或只读文件的时候，弹出确认
+set nobackup
+set noswapfile
 syntax enable
 colorscheme snazzy
-let g:SnazzyTransparent = 1
+set list			" show space and tab
+set listchars=tab:▸\ ,trail:¬,extends:>,precedes:<
 let mapleader = ","
 set softtabstop=4	" inentation
+filetype indent on
+set autoindent
 set tabstop=4
 set shiftwidth=4
-" set hlsearch		"高亮搜索
-" set incsearch
-" set ignorecase	"忽略大小写
-" set smartcase		"智能大小写but can't run
+set smarttab
+set statusline=[%F%m%r%h%w]\ ▸Type-%Y\ [ASCII=\%03.3b]\Hex\%02.2B\ [▸%02l,%02v]\Len%L
 set wrap			" 自动换行
 "set wildmenu		" : 下的补全
-"set nocompatible	"貌似是取消vi兼容
-set autoindent
+set nocompatible	"取消vi兼容
 let g:python3_host_porg = '/usr/bin/python3'
 let g:python2_host_porg = '/usr/bin/python2.7'
 let g:loaded_python_provider = 0
 let g:lodaed_python3_provider = 0
 
+let g:SnazzyTransparent = 1
 "set clipboard=unnamedplus 
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif							"Restore last position
 autocmd BufWritePre *.markdown,*.md,*.text,*.txt,*.wiki,*.cnx call PanGuSpacing()		"PanGu auto typesetting
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 
+let g:Hexokinase_highlighters = ['backgroundfull']
+
+" --------
+"  vimPlug
+" --------
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/goyo.vim'
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'yggdroot/indentline'
+Plug 'mbbill/undotree', {'on':'UndotreeToggle'}
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mhinz/vim-startify'
@@ -45,6 +63,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'SirVer/ultisnips'
 "Plug 'honza/vim-snippets'
 "Plug 'junegunn/vim-peekaboo'
+Plug 'dhruvasagar/vim-table-mode'
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -55,12 +74,16 @@ Plug 'connorholyday/vim-snazzy'
 
 call plug#end()
 
+" --------
+"  Leader
+" --------
 nmap <leader>h <Plug>(easymotion-s2)
 " nnoremap <C-S-U> m1gUiw`1
 " inoremap <C-S-U> <ESC>gUiwgi
 nmap <leader>gy :Goyo<Cr>
 nnoremap <leader>i <Esc>:q<Cr>
 nnoremap <leader>w :w<Cr>
+nnoremap <leader>w! :w! sudo tee %
 nnoremap <leader>s :set spell!<Cr>	" z=　
 inoremap <c-s> <c-x>s
 nnoremap <leader>ve :vsplit $MYVIMRC<Cr>
@@ -74,7 +97,9 @@ noremap _ ,
 inoremap <leader>w <Esc>:w<Cr>
 inoremap <c-u> <Esc> viwU
 
-"xclip
+" --------
+" xclip
+" --------
 
 function! ClipboardYank()
 	call system('xclip -i -selectinon clipboard', @@)
@@ -88,7 +113,9 @@ noremap <leader>p "+p
 
 inoremap <leader>p <Esc>"+p"
 
-"Complie Mod
+" --------
+" Complie
+" --------
 map <leader>r :call Complie()<Cr>
 func! Complie()
 	exec "w"
@@ -96,45 +123,88 @@ if &filetype == 'c'
 	exec "!g++ % -o %<"
 	exec "!time ./%<"
 elseif &filetype == 'go'
-	exec "GoRun"
+	exec "!go build %"
+	exec "!time ./%<"
 elseif &filetype == 'java'
-	exec "!javac %"
+	exec "!javac %<"
 	exec "!java %<"
 elseif &filetype == 'sh'
 	:!time bash %
 elseif &filetype == 'python'
 	set splitright
 	:sp
-	:term python3 %
+	:time python3 %
+elseif &filetype == 'html'
+	exec "!chromium % &"
 elseif &filetype == 'markdown'
 	exec "MarkdownPreview"
 endif
 endfunc
 
-"Test Mod
-map <leader>t :call Test()<cr>
-func! Test()
+" --------
+" Test Mod
+" --------
+map <leader>t :call Debug()<Cr>
+func! Debug()
 if &filetype == 'go'
 	exec "GoTest"
+elseif &filetype == 'c'
+	exec "!g++ % -o %<"
+	exec "!time ./%<"
 endif
 endfunc
 
+" --------
+" 延时启动
+" --------
+let g:coc_start_at_startup=0
+function! CocTimerStart(timer)
+    exec "CocStart"
+endfunction
+call timer_start(500,'CocTimerStart',{'repeat':1})
+let g:coc_global_extensions = ['coc-marketplace','coc-go','coc-python','coc-vimlsp','coc-snippets','coc-emmet','coc-html','coc-json','coc-css','coc-tsserver','coc-yank','coc-lists','coc-highlight','coc-pairs','coc-ccls','coc-texlab','coc-vimtex']
+" if hidden is not set, TextEdit might fail.
+set hidden
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+" Better display for messages
+set cmdheight=2
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+" always show signcolumns
+set signcolumn=yes
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" --------
 " Coc
+" --------
 
-    function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 
-    inoremap <silent><expr> <TAB>
-		  \ pumvisible() ? "\<C-n>" :
-		  \ <SID>check_back_space() ? "\<TAB>" :
-		  \ coc#refresh()
+inoremap <silent><expr> <TAB>
+			\ pumvisible() ? "\<C-n>" :
+			\ <SID>check_back_space() ? "\<TAB>" :
+			\ coc#refresh()
 " if hidden is not set, TextEdit might fail.
 set hidden
 
 " Some servers have issues with backup files, see #649
-set nobackup
 set nowritebackup
 
 " Better display for messages
@@ -152,14 +222,14 @@ set signcolumn=yes
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+			\ pumvisible() ? "\<C-n>" :
+			\ <SID>check_back_space() ? "\<TAB>" :
+			\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
@@ -185,11 +255,11 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	else
+		call CocAction('doHover')
+	endif
 endfunction
 
 " Highlight symbol under cursor on CursorHold
@@ -203,11 +273,11 @@ xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+	autocmd!
+	" Setup formatexpr specified filetype(s).
+	autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+	" Update signature help on jump placeholder
+	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
@@ -262,11 +332,12 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 "Vim-Go
 autocmd Filetype go nmap <leader>b <Plug>(go-build)
 
-" ===
-" === NERDTree
-" ===
+" --------
+" NERDTree
+" --------
 nnoremap <leader>e :NERDTreeToggle<CR>
 let NERDTreeMapOpenExpl = ""
+let NERDTreeShowHidden=1
 let NERDTreeMapUpdir = ""
 let NERDTreeMapUpdirKeepOpen = "l"
 let NERDTreeMapOpenSplit = ""
@@ -276,11 +347,12 @@ let NERDTreeMapOpenInTab = "o"
 let NERDTreeMapPreview = ""
 let NERDTreeMapCloseDir = "n"
 let NERDTreeMapChangeRoot = "y"
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
 
-
-" ==
-" == NERDTree-git
-" ==
+" --------
+" NERDTree-git
+" --------
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",
@@ -293,11 +365,28 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"
     \ }
 
+" --------
+" Undotree
+" --------
+nnoremap <leader>u :UndotreeToggle <Cr>
+silent !mkdir -p ~/.config/nvim/tmp/backup
+silent !mkdir -p ~/.config/nvim/tmp/undo
+set backupdir=~/.config/nvim/tmp/backup
+set directory=~/.config/nvim/tmp/backup
+if has("persistent_undo")
+    set undofile
+    set undodir=~/.config/nvim/tmp/undo
+endif
 
-"MarkDown 
+" --------
+" MarkDown
+" --------
 
 let g:mkdp_browser = 'chromium'
 
+noremap <leader><leader> a#>#<Esc>
+noremap <leader>l a--------<Esc>
+noremap <leader>g <Esc>/#>#<CR>:nohlsearch<CR>c3l
 "autocmd Filetype markdown map <leader>w yiWi[<esc>Ea](<esc>pa)
 autocmd Filetype markdown inoremap ,h <Esc>/#>#<Cr>:nohlsearch<Cr>c3l
 autocmd Filetype markdown inoremap ,t <Esc>/#>#<Cr>:nohlsearch<Cr>c3l<Cr>
