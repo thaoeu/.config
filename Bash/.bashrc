@@ -189,14 +189,16 @@
 # 
 set -o vi
 # alias cd=cd_func
-alias v=nvim
-alias q=exit
-alias ,=cd
+alias q='exit'
+alias p='pwd'
+alias ztg='cp ~/.bashrc ~/config/Bash'
+alias v=vim
 alias l=ls
-alias s='source ~/.bashrc'
+alias ..='cd ..'
+alias ,=cd
+alias s='git status'
 #alias bgg='make bggpad:default'
 alias n='cd ~/qmk_firmware'
 alias c='cd ~/qmk_firmware&&make bggpad:default'
-alias gitpush='git push github master && git push gitee master'
-
+alias gp='git push github master && git push gitee master'
 # source ~/qmk_utils/activate_msys2.sh
