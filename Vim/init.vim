@@ -83,7 +83,7 @@ nmap <leader>h <Plug>(easymotion-s2)
 nmap <leader>gy :Goyo<Cr>
 nnoremap <leader>i <Esc>:q<Cr>
 nnoremap <leader>w :w<Cr>
-nnoremap <leader>w! :w! sudo tee %
+nnoremap <leader>w! :w1 sudo tee %
 nnoremap <leader>s :set spell!<Cr>	" z=　
 inoremap <c-s> <c-x>s
 nnoremap <leader>ve :vsplit $MYVIMRC<Cr>
@@ -133,9 +133,9 @@ elseif &filetype == 'sh'
 elseif &filetype == 'python'
 	set splitright
 	:sp
-	:time python3 %
+	:!time python %
 elseif &filetype == 'html'
-	exec "!chromium % &"
+	exec "!vivaldi-stable % &"
 elseif &filetype == 'markdown'
 	exec "MarkdownPreview"
 endif
@@ -163,61 +163,10 @@ function! CocTimerStart(timer)
 endfunction
 call timer_start(500,'CocTimerStart',{'repeat':1})
 let g:coc_global_extensions = ['coc-marketplace','coc-go','coc-python','coc-vimlsp','coc-snippets','coc-emmet','coc-html','coc-json','coc-css','coc-tsserver','coc-yank','coc-lists','coc-highlight','coc-pairs','coc-ccls','coc-texlab','coc-vimtex']
-" if hidden is not set, TextEdit might fail.
-set hidden
-" Some servers have issues with backup files, see #649
-set nobackup
-set nowritebackup
-" Better display for messages
-set cmdheight=2
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-" always show signcolumns
-set signcolumn=yes
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
 
 " --------
 " Coc
 " --------
-
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <TAB>
-			\ pumvisible() ? "\<C-n>" :
-			\ <SID>check_back_space() ? "\<TAB>" :
-			\ coc#refresh()
-" if hidden is not set, TextEdit might fail.
-set hidden
-
-" Some servers have issues with backup files, see #649
-set nowritebackup
-
-" Better display for messages
-set cmdheight=2
-
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
-
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-
-" always show signcolumns
-set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -232,6 +181,23 @@ function! s:check_back_space() abort
 	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" if hidden is not set, TextEdit might fail.
+set hidden
+
+" Some servers have issues with backup files, see #649
+set nowritebackup
+
+" Better display for messages
+set cmdheight=2
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
@@ -329,7 +295,9 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+" --------
 "Vim-Go
+" --------
 autocmd Filetype go nmap <leader>b <Plug>(go-build)
 
 " --------
@@ -382,11 +350,11 @@ endif
 " MarkDown
 " --------
 
-let g:mkdp_browser = 'chromium'
+let g:mkdp_browser = 'vivaldi-stable'
 
-noremap <leader><leader> a#>#<Esc>
+noremap <leader>m a#>#<Esc>
 noremap <leader>l a--------<Esc>
-noremap <leader>g <Esc>/#>#<CR>:nohlsearch<CR>c3l
+noremap <leader>g <Esc>/#>#<Cr>:nohlsearch<Cr>c3l
 "autocmd Filetype markdown map <leader>w yiWi[<esc>Ea](<esc>pa)
 autocmd Filetype markdown inoremap ,h <Esc>/#>#<Cr>:nohlsearch<Cr>c3l
 autocmd Filetype markdown inoremap ,t <Esc>/#>#<Cr>:nohlsearch<Cr>c3l<Cr>
