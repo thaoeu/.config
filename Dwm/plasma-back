@@ -1,10 +1,7 @@
 [ActivityManager][Global Shortcuts]
 switch-to-activity-afea4b71-e11d-4257-8851-5dacd193c36e=none
 
-[kaccess][Global Shortcuts]
-Toggle Screen Reader On and Off=Meta+Alt+S
-
-[kded5][Global Shortcuts]
+[KDE Keyboard Layout Switcher][Global Shortcuts]
 Disable Touchpad=Touchpad Off
 Enable Touchpad=Touchpad On
 Show System Activity=Ctrl+Esc
@@ -14,6 +11,9 @@ Switch to Next Keyboard Layout=Ctrl+Alt+K
 Toggle Touchpad=Touchpad Toggle
 display=Display; Meta+P
 
+[kaccess][Global Shortcuts]
+Toggle Screen Reader On and Off=Meta+Alt+S
+
 [kmix][Global Shortcuts]
 decrease_microphone_volume=Microphone Volume Down
 decrease_volume=Volume Down
@@ -21,6 +21,10 @@ increase_microphone_volume=Microphone Volume Up
 increase_volume=Volume Up
 mic_mute=Microphone Mute
 mute=Volume Mute
+
+[konversation][Global Shortcuts]
+next_active_tab=none
+toggle_mainwindow_visibility=none
 
 [krunner.desktop][Global Shortcuts]
 RunClipboard=Alt+Shift+F2
@@ -176,7 +180,7 @@ Window to Screen 4=none
 Window to Screen 5=none
 Window to Screen 6=none
 Window to Screen 7=none
-view_actual_size=none
+view_actual_size=Meta+0
 view_zoom_in=Meta+=
 view_zoom_out=Meta+-
 
@@ -194,14 +198,14 @@ _launch=Meta+E
 [org.kde.konsole.desktop][Global Shortcuts]
 NewTab=none
 NewWindow=none
-_launch=Meta+Return
+_launch=Meta+T
 
 [org.kde.spectacle.desktop][Global Shortcuts]
 ActiveWindowScreenShot=Meta+Print
 CurrentMonitorScreenShot=none
 FullScreenScreenShot=Shift+Print
 RectangularRegionScreenShot=Alt+Shift+S
-_launch=Print
+_launch=Meta+T
 
 [org_kde_powerdevil][Global Shortcuts]
 Decrease Keyboard Brightness=Keyboard Brightness Down
@@ -216,7 +220,7 @@ Turn Off Screen=none
 
 [plasmashell][Global Shortcuts]
 activate task manager entry 1=none
-activate task manager entry 10=Meta+0
+activate task manager entry 10=none
 activate task manager entry 2=none
 activate task manager entry 3=none
 activate task manager entry 4=none
@@ -225,7 +229,7 @@ activate task manager entry 6=none
 activate task manager entry 7=Meta+7
 activate task manager entry 8=Meta+8
 activate task manager entry 9=Meta+9
-activate widget 49=Alt+F1
+activate widget 54=Alt+F1
 clear-history=none
 clipboard_action=Ctrl+Alt+X
 cycleNextAction=none
