@@ -131,7 +131,7 @@ alias update='sudo pacman-mirrors -i -c China -m rank'
 alias sus='systemctl suspend'
 alias hn='cd ~/Overt/blog && hugo new'
 alias hu='cd ~/Overt/blog/content/post'
-alias lf=ranger
+alias e=ranger
 # --------
 # Qmk
 # --------
