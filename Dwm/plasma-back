@@ -1,7 +1,10 @@
 [ActivityManager][Global Shortcuts]
 switch-to-activity-afea4b71-e11d-4257-8851-5dacd193c36e=none
 
-[KDE Keyboard Layout Switcher][Global Shortcuts]
+[kaccess][Global Shortcuts]
+Toggle Screen Reader On and Off=Meta+Alt+S
+
+[kded5][Global Shortcuts]
 Disable Touchpad=Touchpad Off
 Enable Touchpad=Touchpad On
 Show System Activity=Ctrl+Esc
@@ -10,9 +13,9 @@ Switch keyboard layout to 英语（Dvorak 布局）=none
 Switch to Next Keyboard Layout=Ctrl+Alt+K
 Toggle Touchpad=Touchpad Toggle
 display=Display; Meta+P
-
-[kaccess][Global Shortcuts]
-Toggle Screen Reader On and Off=Meta+Alt+S
+{3175adf6-4f74-4438-b60d-ee255a7971d9}=Meta+Return
+{d03619b6-9b3c-48cc-9d9c-a2aadb485550}=none
+{ddf45e31-7d45-473f-b144-6a0947aa1550}=Ctrl+Alt+T
 
 [kmix][Global Shortcuts]
 decrease_microphone_volume=Microphone Volume Down
@@ -42,7 +45,7 @@ Activate Window Demanding Attention=Ctrl+Alt+A
 ClearLastMouseMark=Meta+Shift+F12
 ClearMouseMarks=Meta+Shift+F11
 Cube=Ctrl+F11
-Cylinder=Meta+O
+Cylinder=none
 Decrease Opacity=none
 Expose=Ctrl+F9
 ExposeAll=; Launch (C)
@@ -106,15 +109,15 @@ Switch to Screen 7=none
 Toggle Night Color=none
 Toggle Window Raise/Lower=none
 ToggleMouseClick=none
-Walk Through Desktop List=none
+Walk Through Desktop List=Meta+Esc
 Walk Through Desktop List (Reverse)=none
-Walk Through Desktops=none
+Walk Through Desktops=Meta+'
 Walk Through Desktops (Reverse)=none
 Walk Through Windows=Meta+Tab
-Walk Through Windows (Reverse)=Meta+,
+Walk Through Windows (Reverse)=none
 Walk Through Windows Alternative=none
 Walk Through Windows Alternative (Reverse)=none
-Walk Through Windows of Current Application=Alt+`
+Walk Through Windows of Current Application=Meta+,
 Walk Through Windows of Current Application (Reverse)=Alt+~
 Walk Through Windows of Current Application Alternative=none
 Walk Through Windows of Current Application Alternative (Reverse)=none
@@ -128,7 +131,7 @@ Window Lower=none
 Window Maximize=Meta+A
 Window Maximize Horizontal=none
 Window Maximize Vertical=Meta+.
-Window Minimize=Meta+'
+Window Minimize=Meta+O
 Window Move=none
 Window No Border=Meta+B
 Window On All Desktops=Meta+)
@@ -236,7 +239,9 @@ activate task manager entry 7=none
 activate task manager entry 8=none
 activate task manager entry 9=none
 activate widget 54=Alt+F1
-activate widget 55=none
+activate widget 56=none
+activate widget 59=none
+activate widget 8=none
 clear-history=none
 clipboard_action=Ctrl+Alt+X
 cycleNextAction=none
