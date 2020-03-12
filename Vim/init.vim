@@ -83,7 +83,8 @@ nmap <leader>h <Plug>(easymotion-s2)
 nmap <leader>gy :Goyo<Cr>
 nnoremap <leader>i <Esc>:q<Cr>
 nnoremap <leader>w :w<Cr>
-nnoremap <leader>w! :w1 sudo tee %
+nnoremap <leader>!w :w !tee > ~/File/tee.vim<Cr>
+nnoremap <leader>!<leader> :r!cat ~/File/tee.vim<Cr>
 nnoremap <leader>s :set spell!<Cr>	" z=　
 inoremap <c-s> <c-x>s
 nnoremap <leader>ve :vsplit $MYVIMRC<Cr>
