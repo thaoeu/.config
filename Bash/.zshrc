@@ -125,6 +125,8 @@ alias gpb='git push && git push io master'
 # FileName
 # --------
 alias win='cd /run/media/qj'
+alias mountman='mount -t ntfs /dev/sdc3 ~/File/media'
+alias umountman='sudo umount /dev/sdc3'
 alias mark='cd ~/LeetCode/Markdown'
 alias ztg='cp ~/.zshrc ~/Overt/config/Bash && cd ~/Overt/config/Bash'
 alias update='sudo pacman-mirrors -i -c China -m rank'
