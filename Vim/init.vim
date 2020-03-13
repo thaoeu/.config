@@ -83,6 +83,7 @@ nmap <leader>h <Plug>(easymotion-s2)
 nmap <leader>gy :Goyo<Cr>
 nnoremap <leader>i <Esc>:q<Cr>
 nnoremap <leader>w :w<Cr>
+nnoremap <leader>x :x<Cr>
 nnoremap <leader>!w :w !tee > ~/File/tee.vim<Cr>
 nnoremap <leader>!<leader> :r!cat ~/File/tee.vim<Cr>
 nnoremap <leader>s :set spell!<Cr>	" z=　
@@ -110,6 +111,7 @@ function! ClipboardPaste()
 endfunction
 
 noremap <leader>y "+y
+noremap <leader>yy V"+y
 noremap <leader>p "+p
 
 inoremap <leader>p <Esc>"+p"
