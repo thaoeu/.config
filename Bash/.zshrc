@@ -105,7 +105,7 @@ alias ,f=fuck
 alias v='nvim'
 alias p=pwd
 alias l='ls'
-alias t='v ~/Code/todo.md'
+alias t='v ~/Templates/hgd.md'
 alias q='exit'
 alias clean='_ pacman -Rs $(pacman -Qdtq)'
 # alias xx='xmodmap ~/xmodmap/xmodmap'
@@ -114,13 +114,13 @@ alias clean='_ pacman -Rs $(pacman -Qdtq)'
 # --------
 # SSH & SCP & GIT
 # --------
-alias thssh='ssh root@49.234.234.93'
-alias thessh='ssh root@134.175.192.94'
+alias s49='ssh root@49.234.234.93'
+alias the='ssh root@134.175.192.94'
 #alias tha='ssh root@47.95.196.82'
 alias s='git status'
 alias gp='git push github master && git push gitee master'
 alias gpb='git push && git push io master'
-
+alias tim='cd /usr/lib && ./gsd-xsettings &'
 # --------
 # FileName
 # --------
@@ -130,7 +130,7 @@ alias umountman='sudo umount /dev/sdc3'
 alias mark='cd ~/LeetCode/Markdown'
 alias ztg='cp ~/.zshrc ~/Overt/config/Bash && cd ~/Overt/config/Bash'
 alias update='sudo pacman-mirrors -i -c China -m rank'
-alias sus='systemctl suspend'
+#alias sus='systemctl suspend'
 alias hn='cd ~/Overt/blog && hugo new'
 alias hu='cd ~/Overt/blog/content/post'
 alias e=ranger
