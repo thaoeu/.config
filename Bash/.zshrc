@@ -102,6 +102,7 @@ alias ,='cd '
 alias ,w='source ~/.zshrc'
 alias ,i='exit'
 alias ,f=fuck
+alias ,p='feh --recursive --bg-fill ling.jpg'
 alias v='nvim'
 alias p=pwd
 alias l='ls'
@@ -114,8 +115,10 @@ alias clean='_ pacman -Rs $(pacman -Qdtq)'
 # --------
 # SSH & SCP & GIT
 # --------
-alias s49='ssh root@49.234.234.93'
+alias the49='ssh root@49.234.234.93'
 alias the='ssh root@134.175.192.94'
+alias the1='ssh root@139.9.138.63'
+alias the2='ssh root@121.36.62.109'
 #alias tha='ssh root@47.95.196.82'
 alias s='git status'
 alias gp='git push github master && git push gitee master'
