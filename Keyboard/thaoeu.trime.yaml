@@ -1,0 +1,100 @@
+# encoding: UTF-8
+
+config_version: "基于小鹤重构版"
+name: ThAoeu
+author: 标杆杆
+
+height:
+# ------
+# 键盘高度调整
+# ------
+
+    A: &VJG 65      #键盘键高
+    B: &VJM 65      #键盘末行键高
+    C: &FJG 45      #符号键盘键高  C=A*4/5=44.8取整随意
+    Y: &yyy 40      #主键盘键盘第一行
+    B: &VJMM 15
+    FH: &fff 52     #符号键盘字母键统一
+    FHY: &yff 48    #符号键第一行
+    FHm: &fhmm 50   #符号键盘末行高
+    D: &HXG 25      #候选区高度
+    D: &szjg 61.25  #数字键盘高度
+    qty: &gjy 35    #工具键盘第一行
+    qtj: &gjj 48.2  #工具键盘同意高度 x5
+    qtm: &gjm 5     #末行增高
+
+#------
+#如果出现上下档字符偏离键位
+#------
+
+    E: &DsymY 1.8   #主键盘上档文字纵向位置调节，负数上移，下同
+    F: &DsymX 3     #主键盘上档文字横向位置调节，负数左移
+    G: &DtextY 0    #键盘字母纵向位置调节，自定义ziti.ttf文件时如键字母位置偏低则设置-1
+    H: &VJtextY 0   #助记键盘字母纵向位置调节
+    I: &VJhintY -2  #助记键盘韵母纵向位置调节
+
+#------
+#调节尽量以配色中键高最低的配色为标准
+#------
+
+other:
+#主键盘结构（四行）     建议不动
+    a: &VJH 0           #主键盘行距
+    fj: &VFH 0          #符号键盘 行
+    b: &VJL 0           #主键盘列距
+    c: &VJY 1           #主键盘圆角
+#符号键盘结构（五行)    建议不动
+    d: &FJH 0           #符号键盘行距
+    e: &FJL 0           #符号键盘列距
+    f: &FJY 1           #符号键盘圆角
+
+style:
+    auto_caps: false            #自动句首大写:true|false|ascii
+    background_dim_amount: 0.5
+    candidate_font: ziti.ttf    #候选字型
+    candidate_padding: 5        #候选项内边距
+    candidate_spacing: 10       #候选间距
+    candidate_text_size: 19     #候选字号
+    candidate_use_cursor: true  #高亮候选项
+    candidate_view_height: *HXG #候选区高度
+    color_scheme: default       #配色方案
+    comment_font: ziti.ttf      #候选窗和状态栏提示字型
+    comment_height: 12          #候选窗和状态栏提示区高度
+    comment_on_top: true        #候选窗和状态栏提示在上方true或右侧false
+    comment_text_size: 12       #候选窗和状态栏提示字号
+    hanb_font: ziti.ttf         #扩充字型
+    horizontal: false           #水平模式
+    horizontal_gap: *FJL        #符号键盘列间距
+    layout:                     #悬浮窗口位置
+    position: fixed             #位置：left|right|left_up|right_up|fixed|bottom_left|bottom_right|top_left|top_right(left、right需要Android5.0以上)
+    min_length: 0               #候选窗口最小词长
+    max_length: 99              #超过字数则换行
+    sticky_lines: 0             #固顶行数
+    max_entries: 4              #候选窗口最大词条数
+    all_phrases: false          #所有满足条件的词语都显示在窗口
+    border: 1                   #候选窗口边框宽度
+    max_width: 1080             #最大宽度，超过则自动换行
+    max_height: 10              #最大高度
+    min_width: 30               #最小宽度
+    min_height: 0               #最小高度
+    margin_x: 12                #水平边距
+    margin_y: 3                 #竖直边距
+    line_spacing: 0             #候选词的行间距(px)
+    line_spacing_multiplier: 1  #候选词的行间距(倍数)
+    spacing: 0                  #悬浮窗偏移量
+    round_corner: 22            #候选窗口圆角
+    alpha: 255                  #透明度(0-255)
+    elevation: 5                #阴影(>=Android5.0)
+    background: candidate_text_color #颜色色或者backgrounds目录下的图片文件名，此项无效时后面配色的text_back_color则生效
+    movable: false              #是否可移动窗口，或仅移动一次 true|false|once
+window:                         #悬浮窗口組件
+    - {start: "", composition: "%s", end: "", letter_spacing: 0} #letter_spacing需要Android5.0。TODO: 不为0时，会导致不换行的问题
+    - {start: "\n", label: "%s.", candidate: "%s", comment: " %s", end: "", sep: "　 "}  #label: "%s.", 序号;start: "\n", 换行
+    #- {start: "", move: ' ', end: ""}
+    # - {start: "", click: "Page_Down", label: '✍'}
+    key_font: ziti.ttf          #键盘字型
+    key_height: *FJG            #符号键盘键高
+    key_long_text_size: 15      #两字以上时键字号
+    key_text_size: 21           #键字号
+    key_width: 10.0             #键宽，占银幕宽的百分比
+    keyboard: [.default, thekb, thedxkb, theen, thebq1, thebq2, thebq3, thebq4, thebq5, thebq6, thebq7, thebq8, thebq9, thesz, theenkb, ]
