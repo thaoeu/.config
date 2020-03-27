@@ -103,6 +103,7 @@ alias ,w='source ~/.zshrc'
 alias ,i='exit'
 alias ,f=fuck
 alias ,p='feh --recursive --bg-fill ling.jpg'
+alias ,ve='nvim ~/.config/nvim/init.vim'
 alias v='nvim'
 alias p=pwd
 alias l='ls'
@@ -125,6 +126,7 @@ alias s='git status'
 alias gp='git push github master && git push gitee master'
 alias gpb='git push && git push io master'
 alias tim='cd /usr/lib && ./gsd-xsettings &'
+alias site='echo "http://www.sqlsec.com" |curl -F-=\<- qrenco.de'
 # --------
 # FileName
 # --------
