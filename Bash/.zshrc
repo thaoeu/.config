@@ -121,6 +121,7 @@ alias the='ssh root@134.175.192.94'
 alias the1='ssh root@139.9.138.63'
 alias the2='ssh root@121.36.62.109'
 alias thaoeu='ssh 192.168.31.51 -p 8022'
+alias desk='rdesktop -v -u qj -p qj1125 -g 1920x1070 192.168.31.211'
 #alias tha='ssh root@47.95.196.82'
 alias s='git status'
 alias gp='git push github master && git push gitee master'
@@ -140,6 +141,7 @@ alias update='sudo pacman-mirrors -i -c China -m rank'
 alias hn='cd ~/Overt/blog && hugo new'
 alias hu='cd ~/Overt/blog/content/post'
 alias e=ranger
+alias i=ipython
 # --------
 # Qmk
 # --------
