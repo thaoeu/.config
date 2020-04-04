@@ -112,6 +112,7 @@ alias q='exit'
 alias clean='_ pacman -Rs $(pacman -Qdtq)'
 # alias xx='xmodmap ~/xmodmap/xmodmap'
 #alias theme='v ~/document/markdown/theme.md'
+alias ,/='./'
 
 # --------
 # SSH & SCP & GIT
@@ -159,3 +160,6 @@ eval $(thefuck --alias)
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# export NVM_DIR="/home/qj/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
