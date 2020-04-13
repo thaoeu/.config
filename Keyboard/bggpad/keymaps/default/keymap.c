@@ -1,18 +1,39 @@
 #include QMK_KEYBOARD_H
+#define TAPPING_TOGGLE 2
 
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-[0] = LAYOUT(
-		KC_KP_DOT, KC_KP_SLASH, KC_KP_ASTERISK, KC_BSPACE,
-		KC_7, KC_8, KC_9, KC_KP_PLUS,
-		KC_4, KC_5, KC_6, KC_KP_MINUS,
-		KC_1, KC_2, KC_3, LT(1, KC_ENTER)),
-[1] = LAYOUT(
-		M(0), M(1), M(2), M(3),
-		M(2), KC_8, KC_9, KC_UP,
-		M(4), KC_5, KC_6, KC_DOWN,
-		M(5), KC_2, KC_3, KC_0),
+enum {
+	ENT_1 = 0,
 };
 
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [ENT_1] = ACTION_TAP_DANCE_DOUBLE(M(0), KC_RIGHT)
+};
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+[0] = LAYOUT(
+		KC_7, KC_8, KC_9, KC_BSPACE,
+		KC_4, KC_5, KC_6, KC_PGUP,
+		KC_1, KC_2, KC_3, KC_PGDOWN,
+		TD(ENT_1), LT(1, KC_0), KC_E, KC_ENTER),
+/*零层，主区负责数字输入
+LT(1, KC_E)	单击为 E (于 Dvorak 下为 . ) 长按打开一层
+TD(ENT_1)	单击为 ENTER	双击切换长 LGUI ( WIN 键 )
+*/
+[1] = LAYOUT(
+		M(7), M(8), M(9), M(10),
+		M(4), M(5), M(6), KC_COPY,
+		M(1), M(2), M(3), KC_PASTE,
+		M(0), KC_TRNS, M(111), M(112)),
+[2] = LAYOUT(
+		M(0), M(1), M(2), M(3),
+		KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT,
+		M(4), KC_5, KC_6, KC_DOWN,
+		KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT),
+[3] = LAYOUT(
+		G(KC_7), G(KC_8), G(KC_9), G(S(KC_COMMA)),
+		G(KC_4), G(KC_5), G(KC_6), LT(KC_LGUI, KC_PGUP),
+		G(KC_1), G(KC_2), G(KC_3), KC_INSERT,
+		KC_PAUSE, KC_LGUI, G(KC_3), LT(1, KC_ENTER)),
+};
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
 
@@ -22,17 +43,32 @@ switch (id) {
     return MACRO( T(X), T(C), T(1), T(1), T(2), T(5), T(9), T(3), T(7), T(5), END );
     }
     break;
-    case 1:
+    case 2:
     if (record->event.pressed) {
     return MACRO( T(H), T(A), T(L), T(X), T(G), T(C), T(F), T(L), D(LSFT), T(2), U(LSFT), T(SCLN), T(G), T(L), T(A), T(E), T(I), T(L), END );
     }
     break;
-    case 2:
+	case 5:
+	if (record->event.pressed) {
+	return MACRO( D(LSFT), T(7), U(LSFT), T(6), T(1), T(4), D(LSFT), T(2), U(LSFT), T(7), T(2), T(5), D(LSFT), T(4), END );
+	}
+	break;
+    case 6:
     if (record->event.pressed) {
-    return MACRO( D(LSFT), T(7), U(LSFT), T(6), T(1), T(4), D(LSFT), T(2), U(LSFT), T(7), T(2), T(5), D(LSFT), T(4), END );
+    return MACRO( D(LSFT), T(7), U(LSFT), T(6), T(1), T(4), END );
     }
     break;
-    case 3:
+	case 7:
+	if (record->event.pressed) {
+	return MACRO( D(LSFT), T(2), U(LSFT), T(7), T(2), T(5), END );
+	}
+	break;
+	case 9:
+	if (record->event.pressed) {
+	return MACRO(T(1), T(1), T(2), T(5),  END );
+	}
+	break;
+    case 10:
     if (record->event.pressed) {
     return MACRO( T(SCLN), T(1), T(5), T(4), T(9), T(4), T(2), T(6), T(3), T(0), END );
     }
@@ -42,11 +78,20 @@ switch (id) {
     return MACRO( D(LSFT), T(P), U(LSFT), T(G), T(L), T(F), T(B), T(1), T(1), T(2), T(5), END );
     }
     break;
-    case 5:
+    case 1:
     if (record->event.pressed) {
     return MACRO( T(1), T(7), T(5), T(4), T(5), T(1), T(2), T(7), T(6), T(1), T(4), END );
     }
-    break;
+	break;
+    case 111:
+    if (record->event.pressed) {
+	return MACRO( T(1), T(9), T(2), T(E), T(1), T(6), T(8), T(E), END );
+	}
+	break;
+	case 112:
+	if (record->event.pressed) {
+	return MACRO( T(0), T(E), T(0), T(E), T(0), T(E), T(0), END );
+	}
 }
     return MACRO_NONE;
 }
@@ -69,15 +114,15 @@ void oled_task_user(void) { render_logo(); }
 void encoder_update_user(uint8_t index, bool clockwise) {
   if (index == 0) {
     if (clockwise) {
-      tap_code(KC_F8);
+      tap_code(KC_PAUSE);
     } else {
-      tap_code(KC_F9);
+      tap_code(KC_INSERT);
     }
   } else if (index == 1) {
     if (clockwise) {
-      tap_code(KC_MS_UP);
+      tap_code(KC_VOLD);
     } else {
-      tap_code(KC_MS_DOWN);
+      tap_code(KC_VOLU);
     }
   }
 }
