@@ -195,6 +195,7 @@ alias ztg='cp ~/.bashrc ~/config/Bash'
 alias v=vim
 alias l=ls
 alias ..='cd ..'
+alias ...='cd ...'
 alias ,=cd
 alias s='git status'
 #alias bgg='make bggpad:default'
