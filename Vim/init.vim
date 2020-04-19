@@ -28,7 +28,7 @@ set autoindent
 set tabstop=4
 set shiftwidth=4
 set smarttab
-set statusline=[%F%m%r%h%w]\ ▸Type-%Y\ [ASCII=\%03.3b]\Hex\%02.2B\ [▸%02l,%02v]\Len%L
+set statusline=%F%m%r%h%w\ -▸%Y'\ ASCII=\%03.3b\ [▸%02l/%L,%02v]
 "set wildmenu		" 命令模式下的补全
 colorscheme snazzy
 set nocompatible	"取消vi兼容
@@ -63,7 +63,15 @@ noremap _ ,
 
 inoremap <leader>w <Esc>:w<Cr>
 inoremap <c-u> <Esc> viwU
+" --------
+"Translate
+" --------
 
+nmap <silent> <Space> <Plug>TranslateW
+vmap <silent> <Space> <Plug>TranslateWV
+
+nmap <silent> <Leader><Space> <Plug>TranslateR
+vmap <silent> <Leader><Space> <Plug>TranslateRV
 " --------
 "  vimPlug
 " --------
@@ -88,7 +96,7 @@ Plug 'mhinz/vim-startify'
 " 开屏牛助手
 Plug 'easymotion/vim-easymotion'
 " 快速移动
-Plug 'LukeLike/vim-fcitx-switche'
+Plug 'LukeLike/vim-fcitx-switch'
 " fcitx switch plug
 Plug 'dhruvasagar/vim-table-mode'
 " 表格增强插件
@@ -101,13 +109,29 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " nerdtree 的 Git 同步状态插件
 
 Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
 " 代码片段
+Plug 'honza/vim-snippets'
+" 代码片段仓库
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " Write go on vim 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+Plug 'voldikss/vim-translator'
+" Translator
 call plug#end()
+" --------
+" Startify
+" --------
+" let g:startify_padding_left = 20
 
+" --------
+"ultisnips
+" --------
+let g:UltiSnipsExpandTrigger="<c-l>"
+let g:UltiSnipsJumpForwardTrigger="<c-l>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+let g:UltiSnipsSnippeetDirectories = [$HOME.'/.config/nvim/UltiSnips/', 'UltiSnips/']
 " --------
 "	 xclip
 " --------
@@ -259,7 +283,7 @@ autocmd Filetype markdown inoremap ,t <Esc>/#>#<Cr>:nohlsearch<Cr>c3l<Cr>
 
 autocmd Filetype markdown inoremap ,n ---<Enter><Enter>
 autocmd Filetype markdown inoremap ,l --------<Enter>
-" <leader>n 分割
+" <leader>l 分割
 autocmd Filetype markdown inoremap ,b **** #>#<Esc>F*hi
 " <leader>b 加粗
 autocmd Filetype markdown inoremap ,i ** #>#<Esc>F*i
