@@ -71,7 +71,7 @@ source $ZSH/oh-my-zsh.sh
 # Add wisely, as too many plugins slow down shell startup.
 
 
-#source ~/.oh-my-zsh/plugins/incr*.zsh
+source ~/.oh-my-zsh/plugins/incr*.zsh
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -102,7 +102,7 @@ alias ,='cd '
 alias ,w='source ~/.zshrc'
 alias ,i='exit'
 alias ,f=fuck
-alias ,p='feh --recursive --bg-fill ling.jpg'
+alias ,p='feh --recursive --bg-fill'
 alias ,ve='nvim ~/.config/nvim/init.vim'
 alias v='nvim'
 alias p=pwd
@@ -122,7 +122,7 @@ alias the='ssh root@134.175.192.94'
 alias the1='ssh root@139.9.138.63'
 alias the2='ssh root@121.36.62.109'
 alias thaoeu='ssh 192.168.31.51 -p 8022'
-alias desk='rdesktop -v -u qj -p qj1125 -g 1920x1070 192.168.31.211'
+alias desk='rdesktop -v -u qj -p qj1125 -g 1920x1070 192.168.31.147'
 #alias tha='ssh root@47.95.196.82'
 alias s='git status'
 alias gp='git push github master && git push gitee master'
