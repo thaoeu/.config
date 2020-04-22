@@ -72,7 +72,31 @@ source $ZSH/oh-my-zsh.sh
 
 
 source ~/.oh-my-zsh/plugins/incr*.zsh
+# This speeds up pasting w/ autosuggest
+# https://github.com/zsh-users/zsh-autosuggestions/issues/238
+# 解决 incr 粘贴问题
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+ 
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
 # User configuration
+plugins=(
+  git
+  zsh-autosuggestions
+)
+# 提供路径补全
+plugins=(
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
+# 命令高亮
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -122,7 +146,7 @@ alias the='ssh root@134.175.192.94'
 alias the1='ssh root@139.9.138.63'
 alias the2='ssh root@121.36.62.109'
 alias thaoeu='ssh 192.168.31.51 -p 8022'
-alias desk='rdesktop -v -u qj -p qj1125 -g 1920x1070 192.168.31.147'
+alias desk='rdesktop -v -u qj -p qj1125 -g 1920x1070 192.168.31.211'
 #alias tha='ssh root@47.95.196.82'
 alias s='git status'
 alias gp='git push github master && git push gitee master'
