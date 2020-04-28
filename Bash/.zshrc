@@ -135,13 +135,11 @@ alias t='v ~/Templates/hgd.md'
 alias q='exit'
 alias clean='_ pacman -Rs $(pacman -Qdtq)'
 # alias xx='xmodmap ~/xmodmap/xmodmap'
-#alias theme='v ~/document/markdown/theme.md'
 alias ,/='./'
 
 # --------
 # SSH & SCP & GIT
 # --------
-alias the49='ssh root@49.234.234.93'
 alias the='ssh root@134.175.192.94'
 alias the1='ssh root@139.9.138.63'
 alias the2='ssh root@121.36.62.109'
