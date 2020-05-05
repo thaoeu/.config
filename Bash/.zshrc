@@ -71,14 +71,14 @@ source $ZSH/oh-my-zsh.sh
 # Add wisely, as too many plugins slow down shell startup.
 
 
-source ~/.oh-my-zsh/plugins/incr*.zsh
+# source ~/.oh-my-zsh/plugins/incr*.zsh
 # This speeds up pasting w/ autosuggest
 # https://github.com/zsh-users/zsh-autosuggestions/issues/238
 # 解决 incr 粘贴问题
-pasteinit() {
-  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
-}
+# pasteinit() {
+#  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+#  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+#}
  
 pastefinish() {
   zle -N self-insert $OLD_SELF_INSERT
