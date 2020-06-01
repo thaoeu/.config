@@ -1,4 +1,6 @@
-CLEAR Caps_Lock
+clear lock
+clear control
+
 keycode   8 =
 keycode   9 = Escape NoSymbol Escape
 keycode  10 = 1 exclam 1 exclam
@@ -81,7 +83,7 @@ keycode  86 = KP_Add KP_Add KP_Add KP_Add KP_Add KP_Add XF86Next_VMode KP_Add KP
 keycode  87 = KP_End KP_1 KP_End KP_1
 keycode  88 = KP_Down KP_2 KP_Down KP_2
 keycode  89 = KP_Next KP_3 KP_Next KP_3
-keycode  90 = KP_Insert KP_0 KP_Insert KP_0
+keycode  90 = Right NoSymbol Right
 keycode  91 = KP_Delete KP_Decimal KP_Delete KP_Decimal
 keycode  92 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
 keycode  93 =
@@ -102,10 +104,10 @@ keycode 107 = Print Sys_Req Print Sys_Req
 keycode 108 = Alt_R Meta_R Alt_R Meta_R
 keycode 109 = Linefeed NoSymbol Linefeed
 keycode 110 = Home NoSymbol Home
-keycode 111 = Up NoSymbol Up
+keycode 111 = KP_Insert KP_0 KP_Insert KP_0
 keycode 112 = Prior NoSymbol Prior
 keycode 113 = Left NoSymbol Left
-keycode 114 = Right NoSymbol Right
+keycode 114 = Up NoSymbol Up
 keycode 115 = End NoSymbol End
 keycode 116 = Down NoSymbol Down
 keycode 117 = Next NoSymbol Next
@@ -247,3 +249,5 @@ keycode 252 =
 keycode 253 =
 keycode 254 = XF86WWAN NoSymbol XF86WWAN
 keycode 255 = XF86RFKill NoSymbol XF86RFKill
+
+add control = Control_L Control_R
