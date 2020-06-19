@@ -47,6 +47,7 @@ nmap <leader>h <Plug>(easymotion-s2)
 " nnoremap <C-S-U> m1gUiw`1
 " inoremap <C-S-U> <ESC>gUiwgi
 nmap <leader>gy :Goyo<Cr>
+nnoremap <leader><C-g> :%s/[^\x00-\xff]//gn<Cr>
 nnoremap <leader>i <Esc>:q<Cr>
 nnoremap <leader>w :w<Cr>
 nnoremap <leader>!w :w !tee > ~/File/tee.vim<Cr>
@@ -76,6 +77,8 @@ vmap <silent> <Leader><Space> <Plug>TranslateRV
 "  vimPlug
 " --------
 call plug#begin('~/.vim/plugged')
+Plug 'francoiscabrol/ranger.vim'
+Plug 'rbgrouleff/bclose.vim'
 
 Plug 'junegunn/goyo.vim'
 " 隐藏其他控件，专注
@@ -203,6 +206,20 @@ endfunc
 " endfunction
 " call timer_start(500,'CocTimerStart',{'repeat':1})
 " let g:coc_global_extensions = ['coc-marketplace','coc-go','coc-python','coc-vimlsp','coc-snippets','coc-emmet','coc-html','coc-json','coc-css','coc-tsserver','coc-yank','coc-lists','coc-highlight','coc-pairs','coc-ccls','coc-texlab','coc-vimtex']
+
+" 使用 <c-space>强制触发补全
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" 使用 <tab> 触发补全
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+	  \ pumvisible() ? "\<C-n>" :
+	  \ <SID>check_back_space() ? "\<TAB>" :
+	  \ coc#refresh()
 
 
 " --------
