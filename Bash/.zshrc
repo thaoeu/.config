@@ -17,6 +17,24 @@ plugins=(git vi-mode)
 # ZSH_THEME="obraun"
 
 source $ZSH/oh-my-zsh.sh
+
+
+# open lavygit
+
+function zle_eval {
+	echo -en "\e[2k\r"
+	eval "$@"
+	zle redisplay
+}
+
+function openlazygit {
+	zle_eval lazygit
+}
+
+zle -N openlazygit; bindkey "^G" openlazygit
+
+
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -156,6 +174,7 @@ alias site='echo "http://www.sqlsec.com" |curl -F-=\<- qrenco.de'
 # FileName
 # --------
 alias win='cd /run/media/qj'
+alias Jhome='cd ~/LeetCode/IdeaProject/src/thaoeu.site'
 alias mountman='mount -t ntfs /dev/sdc3 ~/File/media'
 alias umountman='sudo umount /dev/sdc3'
 alias mark='cd ~/LeetCode/Markdown'
@@ -179,6 +198,8 @@ alias n='feh --recursive --bg-fill'
 # --------
 alias neo='neofetch \--block_range 1 8 \--line_wrap off \--bold off \--uptime_shorthand on \--gtk_shorthand on \'
 alias fig='figlet -f lean'
+alias xmod='xmodmap ~/Overt/config/xmodmap/xmodmap_esc2Caps'
+alias xmoda='xmodmap ~/Overt/config/xmodmap/xmodmap_ldur'
 eval $(thefuck --alias)
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
