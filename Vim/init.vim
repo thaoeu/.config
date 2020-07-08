@@ -1,3 +1,11 @@
+"<<<
+"自动安装 Vim-plug 插件
+">>>
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 set encoding=utf-8
 set fileencodings=utf-8
 set fileencodings=utf-8,ucs-bom,gbk,cp936,gb2312,gb18030
@@ -48,6 +56,7 @@ nmap <leader>h <Plug>(easymotion-s2)
 " inoremap <C-S-U> <ESC>gUiwgi
 nmap <leader>gy :Goyo<Cr>
 nnoremap <leader><C-g> :%s/[^\x00-\xff]//gn<Cr>
+nnoremap <C-t> :term<Cr>a
 nnoremap <leader>i <Esc>:q<Cr>
 nnoremap <leader>w :w<Cr>
 nnoremap <leader>!w :w !tee > ~/File/tee.vim<Cr>
@@ -150,7 +159,12 @@ noremap <leader>y "+y
 noremap <leader>Y V"+y
 noremap <leader>p "+p
 
-inoremap <leader>p <Esc>"+p"
+"<<<
+"无格式粘贴
+">>>
+inoremap <leader>p <Esc>:setl paste<Cr>gi<C-R>+<Esc>:setl nopaste<Cr>gi
+
+
 
 " --------
 " Complie
