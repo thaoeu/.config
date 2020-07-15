@@ -173,7 +173,6 @@ alias site='echo "http://www.sqlsec.com" |curl -F-=\<- qrenco.de'
 # --------
 # FileName
 # --------
-alias win='cd /run/media/qj'
 alias Jhome='cd ~/LeetCode/IdeaProject/src/thaoeu.site'
 alias mountman='mount -t ntfs /dev/sdc3 ~/File/media'
 alias umountman='sudo umount /dev/sdc3'
