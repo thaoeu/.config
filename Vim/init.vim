@@ -95,6 +95,8 @@ Plug 'hotoo/pangu.vim'
 "『盘古之白』中文排版
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 " Markdown 同步预览
+Plug 'dhruvasagar/vim-table-mode'
+" Markdown table addon
 Plug 'connorholyday/vim-snazzy'
 " Snazzy 主题
 Plug 'dracula/vim'
