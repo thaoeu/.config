@@ -175,6 +175,7 @@ dir_node_exact_matches = {
     '.git'                             : '',
     'Desktop'                          : '',
     'File'                             : '',
+    'go'                               : '',
     'Downloads'                        : '',
     'Dotfiles'                         : '',
     'Script'                           : '',
