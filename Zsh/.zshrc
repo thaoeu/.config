@@ -210,6 +210,7 @@ alias ,i='exit'
 alias ,f=fuck
 alias ,p='feh --recursive --bg-fill'
 alias ,ve='nvim ~/.config/nvim/init.vim'
+alias ,v='nvim ~/.zshrc'
 alias v='nvim'
 alias p=pwd
 alias l='ls'
@@ -264,7 +265,6 @@ alias fig='figlet -f lean'
 alias xmod='xmodmap ~/Overt/config/xmodmap/xmodmap_esc2Caps'
 alias xmoda='xmodmap ~/Overt/config/xmodmap/xmodmap_ldur'
 alias _=sudo
-alias ,v='nvim ~/.zshrc'
 set -o vi
 EDITOR=nvim
 export EDITOR
